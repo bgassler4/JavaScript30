@@ -1,48 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Understanding JavaScript's Capture</title>
-</head>
-<body class="bod">
-
-  <div class="one">
-    <div class="two">
-      <div class="three">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Understanding JavaScript's Capture</title>
+  </head>
+  <body class="bod">
+    <div class="one">
+      <div class="two">
+        <div class="three"></div>
       </div>
     </div>
-  </div>
 
-<style>
-  html {
-    box-sizing: border-box;
-  }
-  
-  *, *:before, *:after { 
-    box-sizing: inherit; 
-  }
+    <button>Click Once</button>
 
-  div {
-    width: 100%;
-    padding: 100px;
-  }
+    <style>
+      html {
+        box-sizing: border-box;
+      }
 
-  .one {
-    background: thistle;
-  }
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
 
-  .two {
-    background: mistyrose;
-  }
+      div {
+        width: 100%;
+        padding: 100px;
+      }
 
-  .three {
-    background: coral;
-  }
-</style>
+      .one {
+        background: thistle;
+      }
 
-<button></button>
-<script>
+      .two {
+        background: mistyrose;
+      }
 
-</script>
-</body>
+      .three {
+        background: coral;
+      }
+    </style>
+
+    <script>
+      const divs = document.querySelectorAll("div");
+      const button = document.querySelector("button");
+
+      function logText(e) {
+        console.log(this.classList.value);
+        e.stopPropagation();
+      }
+
+      divs.forEach((div) =>
+        div.addEventListener("click", logText, {
+          capture: false,
+          once: true, //removes event listener after event fires
+        })
+      );
+
+      button.addEventListener(
+        "click",
+        () => {
+          console.log("Click!!!");
+        },
+        {
+          once: true,
+        }
+      );
+    </script>
+  </body>
 </html>
